@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +19,17 @@ namespace CabInvoiceGenerator
                 throw new InvoiceGenerateException(InvoiceGenerateException.Type.INVALID_DISTANCE, "Invalid Distance");
             float fair = distance * PER_KM + time * PER_MINIT;
             return Math.Max(5, fair);
+        }
+        public float CalculateFair(Ride[] rides)
+        {
+            if (rides == null)
+                throw new InvoiceGenerateException(InvoiceGenerateException.Type.NULL_RIDES, "Null Rides");
+
+            float totalFair = 0;
+            foreach (Ride ride in rides)
+                totalFair = totalFair + CalculateFair(ride.Distance, ride.Time);
+
+            return totalFair;
         }
     }
 }

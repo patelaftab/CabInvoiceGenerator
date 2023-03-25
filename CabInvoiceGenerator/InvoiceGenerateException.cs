@@ -12,6 +12,7 @@ namespace CabInvoiceGenerator
         {
             INVALID_DISTANCE,
             INVALID_TIME,
+            NULL_RIDES,
         }
         Type type;
         public InvoiceGenerateException(Type type, string message) : base(message)

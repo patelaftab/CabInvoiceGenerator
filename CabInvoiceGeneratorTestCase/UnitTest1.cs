@@ -27,5 +27,27 @@ namespace CabInvoiceGeneratorTestCase
         {
             Assert.AreEqual(5, invoiceGenerator.CalculateFair(0.1f, 0.1f));
         }
+        [Test]
+        public void GivenSetOfRides_ShouldReturnTotalFair()
+        {
+            Ride[] rides = { new Ride(1.0f, 2.0f), new Ride(2.0f, 4.0f) };
+
+            float totalFair = invoiceGenerator.CalculateFair(rides);
+            Assert.AreEqual(36, totalFair);
+        }
+
+        [Test]
+        public void GivenNullRides_ShouldReturnNullRideException()
+        {
+            Ride[] rides = null;
+            try
+            {
+                float totalFair = invoiceGenerator.CalculateFair(rides);
+            }
+            catch (InvoiceGenerateException ex)
+            {
+                Assert.AreEqual("Null Rides", ex.Message);
+            }
+        }
     }
 }
